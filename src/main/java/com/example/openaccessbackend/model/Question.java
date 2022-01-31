@@ -94,7 +94,7 @@ public class Question {
     public void setAnswer4(String answer4) {
         this.answer4 = answer4;
     }
-
+//updated this to Integer
     public Integer getCorrect() {
         return correct;
     }
