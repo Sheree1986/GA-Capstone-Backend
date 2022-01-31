@@ -32,7 +32,7 @@ public class Question {
     @Column
     private String answer4;
     @Column
-    private int correct;
+    private Integer correct;
 
     @OneToMany(mappedBy = "question", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -95,7 +95,7 @@ public class Question {
         this.answer4 = answer4;
     }
 
-    public int getCorrect() {
+    public Integer getCorrect() {
         return correct;
     }
 
