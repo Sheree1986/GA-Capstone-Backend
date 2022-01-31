@@ -1,7 +1,7 @@
 package com.example.openaccessbackend.controller;
 
 import com.example.openaccessbackend.model.Question;
-import com.example.openaccessbackend.model.Answer;
+import com.example.openaccessbackend.model.User;
 import com.example.openaccessbackend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -71,42 +71,42 @@ public class QuestionController {
 //===========================================Answer================================================================
 
 
-    //6 -> Get all answers http://localhost:9092/api/answers
-    @GetMapping("/answers")
-    public List<Answer> getAnswers() {
+    //6 -> Get all users http://localhost:9092/api/users
+    @GetMapping("/users")
+    public List<User> getAnswers() {
         LOGGER.info(" calling getAnswers method from controller");
-        return questionService.getAnswers();
+        return questionService.getUsers();
     }
 
-    //7 -> Get a single answer http://localhost:9092/api/answers/{answerId}
-    @GetMapping("/answers/{answerId}")
-    public Optional getAnswer(@PathVariable Long answerId) {
-        LOGGER.info(" calling getAnswer method from controller");
-        return questionService.getAnswer(answerId);
-    }
-
-
-    //8 -> Post/Create question and add an answer to the question  http://localhost:9092/api/questions/1/answers
-    @PostMapping(path = "/questions/{questionId}/answers")
-    public Answer createAnswer(@PathVariable Long questionId, @RequestBody Answer answerObject) {
-        LOGGER.info("calling createAnswer method from controller");
-        return questionService.createAnswer(questionId, answerObject);
-    }
-
-    //9 -> Put/Update an answer http://localhost:9092/api/answers/1
-
-    @PutMapping(path = "/answers/{answerId}")
-    public Answer updateAnswer(@PathVariable(
-            value = "answerId") Long answerId, @RequestBody Answer answerObject) {
-        LOGGER.info("calling updateAnswer method from controller");
-        return questionService.updateAnswer(answerId, answerObject);
+    //7 -> Get a single user http://localhost:9092/api/users/{userId}
+    @GetMapping("/users/{userId}")
+    public Optional getUser(@PathVariable Long userId) {
+        LOGGER.info(" calling getUser method from controller");
+        return questionService.getUser(userId);
     }
 
 
-    //10 -> Delete a answer http://localhost:9092/api/questions/1
-    @DeleteMapping(path = "/answers/{answerId}")
-    public Optional<Answer> deleteAnswer(@PathVariable(value = "answerId") Long answerId) {
-        LOGGER.info("calling deleteAnswer method from controller");
-        return questionService.deleteAnswer(answerId);
+    //8 -> Post/Create question and add an user to the question  http://localhost:9092/api/questions/1/users
+    @PostMapping(path = "/questions/{questionId}/users")
+    public User createUser(@PathVariable Long questionId, @RequestBody User userObject) {
+        LOGGER.info("calling createUser method from controller");
+        return questionService.createUser(questionId, userObject);
+    }
+
+    //9 -> Put/Update an user http://localhost:9092/api/users/1
+
+    @PutMapping(path = "/users/{userId}")
+    public User updateUser(@PathVariable(
+            value = "userId") Long userId, @RequestBody User userObject) {
+        LOGGER.info("calling updateUser method from controller");
+        return questionService.updateUser(userId, userObject);
+    }
+
+
+    //10 -> Delete a user http://localhost:9092/api/questions/1
+    @DeleteMapping(path = "/users/{userId}")
+    public Optional<User> deleteUser(@PathVariable(value = "userId") Long userId) {
+        LOGGER.info("calling deleteUser method from controller");
+        return questionService.deleteUser(userId);
     }
 }

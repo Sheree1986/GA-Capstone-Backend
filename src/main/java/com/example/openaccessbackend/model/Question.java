@@ -19,12 +19,24 @@ public class Question {
     @Column
     private String text;
 
+    @Column
+    private String imageTitle;
+
+    @Column
+    private String answer1;
+
+    @Column
+    private String answer2;
+    @Column
+    private String answer3;
+    @Column
+    private String answer4;
+    @Column
+    private int correct;
+
     @OneToMany(mappedBy = "question", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Answer> answerList;
-
-
-
+    private List<User> userList;
 
 
     public Long getId() {
@@ -43,12 +55,60 @@ public class Question {
         this.text = text;
     }
 
-    public List<Answer> getAnswerList() {
-        return answerList;
+    public String getImageTitle() {
+        return imageTitle;
     }
 
-    public void setAnswerList(List<Answer> answerList) {
-        this.answerList = answerList;
+    public void setImageTitle(String imageTitle) {
+        this.imageTitle = imageTitle;
+    }
+
+    public String getAnswer1() {
+        return answer1;
+    }
+
+    public void setAnswer1(String answer1) {
+        this.answer1 = answer1;
+    }
+
+    public String getAnswer2() {
+        return answer2;
+    }
+
+    public void setAnswer2(String answer2) {
+        this.answer2 = answer2;
+    }
+
+    public String getAnswer3() {
+        return answer3;
+    }
+
+    public void setAnswer3(String answer3) {
+        this.answer3 = answer3;
+    }
+
+    public String getAnswer4() {
+        return answer4;
+    }
+
+    public void setAnswer4(String answer4) {
+        this.answer4 = answer4;
+    }
+
+    public int getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(int correct) {
+        this.correct = correct;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
 

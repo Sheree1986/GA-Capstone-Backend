@@ -5,9 +5,9 @@ import com.example.openaccessbackend.controller.QuestionController;
 import com.example.openaccessbackend.exception.InformationExistException;
 import com.example.openaccessbackend.exception.InformationNotFoundException;
 import com.example.openaccessbackend.model.Question;
-import com.example.openaccessbackend.model.Answer;
+import com.example.openaccessbackend.model.User;
 import com.example.openaccessbackend.repository.QuestionRepository;
-import com.example.openaccessbackend.repository.AnswerRepository;
+import com.example.openaccessbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +30,11 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    private AnswerRepository answerRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public void setAnswerRepository(AnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 
@@ -103,68 +103,71 @@ public class QuestionService {
 
 // ===============================================ANSWER=========================================================
 
-    //6 -> Get all answers http://localhost:9092/api/answers/
-    public List<Answer> getAnswers() {
+    //6 -> Get all users http://localhost:9092/api/users/
+    public List<User> getUsers() {
         LOGGER.info("service calling getQuestion==>");
-        return answerRepository.findAll();
+        return userRepository.findAll();
     }
 
-    //7 -> Get a single answer http://localhost:9092/api/answers/1
+    //7 -> Get a single user http://localhost:9092/api/users/1
 
-    public Optional getAnswer(Long answerId) {
-        LOGGER.info("service calling getAnswer==>");
-        Optional answer = answerRepository.findById(answerId);
-        if (answer.isPresent()) {
-            return answer;
+    public Optional getUser(Long userId) {
+        LOGGER.info("service calling getUser==>");
+        Optional user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return user;
         } else {
-            throw new InformationNotFoundException("answer with id " + answerId + " not found");
+            throw new InformationNotFoundException("user with id " + userId + " not found");
         }
     }
 
-    //8 -> Post/Create a question and add an answer http://localhost:9092/api/questions/1/answers
+    //8 -> Post/Create a question and add an user http://localhost:9092/api/questions/1/users
 
-    public Answer createAnswer(Long questionId, Answer answerObject) {
-        LOGGER.info("service calling createAnswer ==>");
+    public User createUser(Long questionId, User userObject) {
+        LOGGER.info("service calling createUser ==>");
         try {
             // here we're trying to find the question
             Optional question = questionRepository.findById(questionId);
-            // if the question is found, then attach it to the answerObject
-            answerObject.setQuestion((Question) question.get());
-            // we save the answer with the question information
-            return answerRepository.save(answerObject);
+            // if the question is found, then attach it to the userObject
+            userObject.setQuestion((Question) question.get());
+            // we save the user with the question information
+            return userRepository.save(userObject);
         } catch (NoSuchElementException e) {
             throw new InformationNotFoundException("Question with id " + questionId + "not found");
         }
     }
 
-    //9 -> Put/Update an answer http://localhost:9092/api/answers/1
-    public Answer updateAnswer(Long answerId, Answer answerObject) {
-        LOGGER.info("service calling updateAnswer method ==> ");
-        Optional<Answer> answer = answerRepository.findById(answerId);
-        if (answer.isPresent()) {
-            if (answerObject.getResponse().equals(answer.get().getResponse())) {
-                throw new InformationExistException("answer with name " + answer.get()
-                        .getResponse() + " already exist");
+    //9 -> Put/Update an user http://localhost:9092/api/users/1
+    public User updateUser(Long userId, User userObject) {
+        LOGGER.info("service calling updateUser method ==> ");
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            if (userObject.getName().equals(user.get().getName())) {
+                throw new InformationExistException("user with name " + user.get()
+                        .getName() + " already exist");
             } else {
-                Answer updateAnswer = answerRepository.findById(answerId).get();
-                updateAnswer.setResponse(answerObject.getResponse());
-                return answerRepository.save(updateAnswer);
+                User updateUser = userRepository.findById(userId).get();
+                updateUser.setName(userObject.getName());
+                updateUser.setEmail(userObject.getEmail());
+                updateUser.setScore(userObject.getScore());
+                updateUser.setTimer(userObject.getTimer());
+                return userRepository.save(updateUser);
             }
         } else {
-            throw new InformationNotFoundException("answer with id " + answerId + " not found");
+            throw new InformationNotFoundException("user with id " + userId + " not found");
         }
 
     }
 
-    //10 -> Delete an answer http://localhost:9092/api/answer/1
-    public Optional<Answer> deleteAnswer(Long answerId) {
-        LOGGER.info("calling deleteAnswer method ==>");
-        Optional<Answer> answer = answerRepository.findById(answerId);
-        if (answer.isPresent()) {
-            answerRepository.deleteById(answerId);
-            return answer;
+    //10 -> Delete an user http://localhost:9092/api/user/1
+    public Optional<User> deleteUser(Long userId) {
+        LOGGER.info("calling deleteUser method ==>");
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            userRepository.deleteById(userId);
+            return user;
         } else {
-            throw new InformationNotFoundException("answer with id: " + answerId + " not found");
+            throw new InformationNotFoundException("user with id: " + userId + " not found");
         }
     }
 }
