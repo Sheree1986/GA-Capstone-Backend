@@ -19,9 +19,9 @@ public class User {
     @Column
     private String Email;
     @Column
-    private Short Score;
+    private Integer Score;
     @Column
-    private Short Timer;
+    private Integer Timer;
 
 
 
@@ -56,19 +56,19 @@ public class User {
         Email = email;
     }
 
-    public Short getScore() {
+    public Integer getScore() {
         return Score;
     }
 
-    public void setScore(Short score) {
+    public void setScore(Integer score) {
         Score = score;
     }
 
-    public Short getTimer() {
+    public Integer getTimer() {
         return Timer;
     }
 
-    public void setTimer(Short timer) {
+    public void setTimer(Integer timer) {
         Timer = timer;
     }
 
