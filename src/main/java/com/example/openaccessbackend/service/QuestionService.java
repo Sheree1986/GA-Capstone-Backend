@@ -83,6 +83,12 @@ public class QuestionService {
 
         } else {
             question.get().setText(questionObject.getText());
+            question.get().setImageTitle(questionObject.getImageTitle());
+            question.get().setAnswer1(questionObject.getAnswer1());
+            question.get().setAnswer2(questionObject.getAnswer2());
+            question.get().setAnswer3(questionObject.getAnswer3());
+            question.get().setAnswer4(questionObject.getAnswer4());
+            question.get().setCorrect(questionObject.getCorrect());
             return questionRepository.save(question.get());
         }
     }
