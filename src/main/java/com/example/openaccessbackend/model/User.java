@@ -3,7 +3,6 @@ package com.example.openaccessbackend.model;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -15,22 +14,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String Name;
+    private String name;
     @Column
-    private String Email;
+    private String email;
     @Column
-    private Integer Score;
-    @Column
-    private Integer Timer;
-
-
-
-
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
+    private Integer score;
 
     public Long getId() {
         return id;
@@ -41,45 +29,42 @@ public class User {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public Integer getScore() {
-        return Score;
+        return score;
     }
 
     public void setScore(Integer score) {
-        Score = score;
+        this.score = score;
     }
 
     public Integer getTimer() {
-        return Timer;
+        return timer;
     }
 
     public void setTimer(Integer timer) {
-        Timer = timer;
+        this.timer = timer;
     }
 
+    @Column
+    private Integer timer;
 
-    public Question getQuestion() {
-        return question;
-    }
 
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
+
 
 
 }

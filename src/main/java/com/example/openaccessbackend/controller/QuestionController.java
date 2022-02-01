@@ -21,11 +21,11 @@ public class QuestionController {
     public void setQuestionService(QuestionService questionService) {
         this.questionService = questionService;
     }
-    //creating the two endpoints - (Question, Answer)
+    //creating the two endpoints - (Questions, Users)
 
 
 
-//==========================================Book==============================================
+//==========================================Questions==============================================
 
     //1 -> GET all question http://localhost:9092/api/questions
     @GetMapping("/questions")
@@ -72,7 +72,7 @@ public class QuestionController {
 
 
     //6 -> Get all users http://localhost:9092/api/users
-    @GetMapping("/users")
+    @GetMapping("/users/")
     public List<User> getAnswers() {
         LOGGER.info(" calling getAnswers method from controller");
         return questionService.getUsers();
@@ -86,12 +86,13 @@ public class QuestionController {
     }
 
 
-    //8 -> Post/Create question and add an user to the question  http://localhost:9092/api/questions/1/users
-    @PostMapping(path = "/questions/{questionId}/users")
-    public User createUser(@PathVariable Long questionId, @RequestBody User userObject) {
+    //8 -> Post/Create users and add an user to the user http://localhost:9092/api/users
+    @PostMapping(path = "/users")
+    public User createUser(@RequestBody User userObject) {
         LOGGER.info("calling createUser method from controller");
-        return questionService.createUser(questionId, userObject);
+        return questionService.createUser(userObject);
     }
+
 
     //9 -> Put/Update an user http://localhost:9092/api/users/1
 

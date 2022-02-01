@@ -127,21 +127,20 @@ public class QuestionService {
         }
     }
 
-    //8 -> Post/Create a question and add an user http://localhost:9092/api/questions/1/users
+    //8 -> Post/Create a question and add an user http://localhost:9092/api/users
 
-    public User createUser(Long questionId, User userObject) {
+    public User createUser(User userObject) {
         LOGGER.info("service calling createUser ==>");
-        try {
-            // here we're trying to find the question
-            Optional question = questionRepository.findById(questionId);
-            // if the question is found, then attach it to the userObject
-            userObject.setQuestion((Question) question.get());
-            // we save the user with the question information
+        User user = userRepository.findByName(userObject.getName());
+        if (user !=null) {
+            throw new InformationExistException("user with name " + user.getName() + " already exists");
+        } else {
             return userRepository.save(userObject);
-        } catch (NoSuchElementException e) {
-            throw new InformationNotFoundException("Question with id " + questionId + "not found");
         }
     }
+
+
+
 
     //9 -> Put/Update an user http://localhost:9092/api/users/1
     public User updateUser(Long userId, User userObject) {

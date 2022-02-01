@@ -1,11 +1,11 @@
 package com.example.openaccessbackend.model;
 
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+//import org.hibernate.annotations.LazyCollection;
+//import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.List;
+//import java.util.List;
 
 
 @Entity
@@ -34,9 +34,7 @@ public class Question {
     @Column
     private Integer correct;
 
-    @OneToMany(mappedBy = "question", orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<User> userList;
+
 
 
     public Long getId() {
@@ -101,14 +99,6 @@ public class Question {
 
     public void setCorrect(int correct) {
         this.correct = correct;
-    }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
     }
 
 
