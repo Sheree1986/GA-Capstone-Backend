@@ -5,14 +5,14 @@ import com.example.openaccessbackend.controller.QuestionController;
 import com.example.openaccessbackend.exception.InformationExistException;
 import com.example.openaccessbackend.exception.InformationNotFoundException;
 import com.example.openaccessbackend.model.Question;
-import com.example.openaccessbackend.model.User;
+//import com.example.openaccessbackend.model.User;
 import com.example.openaccessbackend.repository.QuestionRepository;
-import com.example.openaccessbackend.repository.UserRepository;
+//import com.example.openaccessbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+//import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -29,16 +29,13 @@ public class QuestionService {
     public void setQuestionRepository(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
-
-    private UserRepository userRepository;
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-
-
+//
+//    private UserRepository userRepository;
+//
+//    @Autowired
+//    public void setUserRepository(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 
 
     // ===============================================QUESTION=======================================================
@@ -83,11 +80,10 @@ public class QuestionService {
 
         } else {
             question.get().setText(questionObject.getText());
-            question.get().setImageTitle(questionObject.getImageTitle());
-            question.get().setAnswer1(questionObject.getAnswer1());
-            question.get().setAnswer2(questionObject.getAnswer2());
-            question.get().setAnswer3(questionObject.getAnswer3());
-            question.get().setAnswer4(questionObject.getAnswer4());
+            question.get().setA(questionObject.getA());
+            question.get().setB(questionObject.getB());
+            question.get().setC(questionObject.getC());
+            question.get().setD(questionObject.getD());
             question.get().setCorrect(questionObject.getCorrect());
             return questionRepository.save(question.get());
         }
@@ -106,73 +102,73 @@ public class QuestionService {
         }
     }
 
-
-// ===============================================ANSWER=========================================================
-
-    //6 -> Get all users http://localhost:9092/api/users/
-    public List<User> getUsers() {
-        LOGGER.info("service calling getQuestion==>");
-        return userRepository.findAll();
-    }
-
-    //7 -> Get a single user http://localhost:9092/api/users/1
-
-    public Optional getUser(Long userId) {
-        LOGGER.info("service calling getUser==>");
-        Optional user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            return user;
-        } else {
-            throw new InformationNotFoundException("user with id " + userId + " not found");
-        }
-    }
-
-    //8 -> Post/Create a question and add an user http://localhost:9092/api/users
-
-    public User createUser(User userObject) {
-        LOGGER.info("service calling createUser ==>");
-        User user = userRepository.findByName(userObject.getName());
-        if (user !=null) {
-            throw new InformationExistException("user with name " + user.getName() + " already exists");
-        } else {
-            return userRepository.save(userObject);
-        }
-    }
-
-
-
-
-    //9 -> Put/Update an user http://localhost:9092/api/users/1
-    public User updateUser(Long userId, User userObject) {
-        LOGGER.info("service calling updateUser method ==> ");
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            if (userObject.getName().equals(user.get().getName())) {
-                throw new InformationExistException("user with name " + user.get()
-                        .getName() + " already exist");
-            } else {
-                User updateUser = userRepository.findById(userId).get();
-                updateUser.setName(userObject.getName());
-                updateUser.setEmail(userObject.getEmail());
-                updateUser.setScore(userObject.getScore());
-                updateUser.setTimer(userObject.getTimer());
-                return userRepository.save(updateUser);
-            }
-        } else {
-            throw new InformationNotFoundException("user with id " + userId + " not found");
-        }
-
-    }
-
-    //10 -> Delete an user http://localhost:9092/api/user/1
-    public Optional<User> deleteUser(Long userId) {
-        LOGGER.info("calling deleteUser method ==>");
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            userRepository.deleteById(userId);
-            return user;
-        } else {
-            throw new InformationNotFoundException("user with id: " + userId + " not found");
-        }
-    }
 }
+//// ===============================================ANSWER=========================================================
+//
+//    //6 -> Get all users http://localhost:9092/api/users/
+//    public List<User> getUsers() {
+//        LOGGER.info("service calling getQuestion==>");
+//        return userRepository.findAll();
+//    }
+//
+//    //7 -> Get a single user http://localhost:9092/api/users/1
+//
+//    public Optional getUser(Long userId) {
+//        LOGGER.info("service calling getUser==>");
+//        Optional user = userRepository.findById(userId);
+//        if (user.isPresent()) {
+//            return user;
+//        } else {
+//            throw new InformationNotFoundException("user with id " + userId + " not found");
+//        }
+//    }
+//
+//    //8 -> Post/Create a question and add an user http://localhost:9092/api/users
+//
+//    public User createUser(User userObject) {
+//        LOGGER.info("service calling createUser ==>");
+//        User user = userRepository.findByName(userObject.getName());
+//        if (user !=null) {
+//            throw new InformationExistException("user with name " + user.getName() + " already exists");
+//        } else {
+//            return userRepository.save(userObject);
+//        }
+//    }
+//
+//
+//
+//
+//    //9 -> Put/Update an user http://localhost:9092/api/users/1
+//    public User updateUser(Long userId, User userObject) {
+//        LOGGER.info("service calling updateUser method ==> ");
+//        Optional<User> user = userRepository.findById(userId);
+//        if (user.isPresent()) {
+//            if (userObject.getName().equals(user.get().getName())) {
+//                throw new InformationExistException("user with name " + user.get()
+//                        .getName() + " already exist");
+//            } else {
+//                User updateUser = userRepository.findById(userId).get();
+//                updateUser.setName(userObject.getName());
+//                updateUser.setEmail(userObject.getEmail());
+//                updateUser.setScore(userObject.getScore());
+//                updateUser.setTimer(userObject.getTimer());
+//                return userRepository.save(updateUser);
+//            }
+//        } else {
+//            throw new InformationNotFoundException("user with id " + userId + " not found");
+//        }
+//
+//    }
+//
+//    //10 -> Delete an user http://localhost:9092/api/user/1
+//    public Optional<User> deleteUser(Long userId) {
+//        LOGGER.info("calling deleteUser method ==>");
+//        Optional<User> user = userRepository.findById(userId);
+//        if (user.isPresent()) {
+//            userRepository.deleteById(userId);
+//            return user;
+//        } else {
+//            throw new InformationNotFoundException("user with id: " + userId + " not found");
+//        }
+//    }
+//}

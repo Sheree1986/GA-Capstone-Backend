@@ -20,22 +20,16 @@ public class Question {
     private String text;
 
     @Column
-    private String imageTitle;
+    private String a;
 
     @Column
-    private String answer1;
-
+    private String b;
     @Column
-    private String answer2;
+    private String c;
     @Column
-    private String answer3;
+    private String d;
     @Column
-    private String answer4;
-    @Column
-    private Integer correct;
-
-
-
+    private String correct;
 
     public Long getId() {
         return id;
@@ -53,53 +47,43 @@ public class Question {
         this.text = text;
     }
 
-    public String getImageTitle() {
-        return imageTitle;
+    public String getA() {
+        return a;
     }
 
-    public void setImageTitle(String imageTitle) {
-        this.imageTitle = imageTitle;
+    public void setA(String a) {
+        this.a = a;
     }
 
-    public String getAnswer1() {
-        return answer1;
+    public String getB() {
+        return b;
     }
 
-    public void setAnswer1(String answer1) {
-        this.answer1 = answer1;
+    public void setB(String b) {
+        this.b = b;
     }
 
-    public String getAnswer2() {
-        return answer2;
+    public String getC() {
+        return c;
     }
 
-    public void setAnswer2(String answer2) {
-        this.answer2 = answer2;
+    public void setC(String c) {
+        this.c = c;
     }
 
-    public String getAnswer3() {
-        return answer3;
+    public String getD() {
+        return d;
     }
 
-    public void setAnswer3(String answer3) {
-        this.answer3 = answer3;
+    public void setD(String d) {
+        this.d = d;
     }
 
-    public String getAnswer4() {
-        return answer4;
-    }
-
-    public void setAnswer4(String answer4) {
-        this.answer4 = answer4;
-    }
-//updated this to Integer
-    public Integer getCorrect() {
+    public String getCorrect() {
         return correct;
     }
 
-    public void setCorrect(int correct) {
+    public void setCorrect(String correct) {
         this.correct = correct;
     }
-
-
 }

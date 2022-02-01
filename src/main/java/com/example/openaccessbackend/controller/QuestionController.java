@@ -1,7 +1,7 @@
 package com.example.openaccessbackend.controller;
 
 import com.example.openaccessbackend.model.Question;
-import com.example.openaccessbackend.model.User;
+//import com.example.openaccessbackend.model.User;
 import com.example.openaccessbackend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,6 @@ public class QuestionController {
         this.questionService = questionService;
     }
     //creating the two endpoints - (Questions, Users)
-
 
 
 //==========================================Questions==============================================
@@ -66,48 +65,48 @@ public class QuestionController {
         LOGGER.info("calling deleteQuestion method from controller");
         return questionService.deleteQuestion(questionId);
     }
-
-
-//===========================================Answer================================================================
-
-
-    //6 -> Get all users http://localhost:9092/api/users
-    @GetMapping("/users/")
-    public List<User> getAnswers() {
-        LOGGER.info(" calling getAnswers method from controller");
-        return questionService.getUsers();
-    }
-
-    //7 -> Get a single user http://localhost:9092/api/users/{userId}
-    @GetMapping("/users/{userId}")
-    public Optional getUser(@PathVariable Long userId) {
-        LOGGER.info(" calling getUser method from controller");
-        return questionService.getUser(userId);
-    }
-
-
-    //8 -> Post/Create users and add an user to the user http://localhost:9092/api/users
-    @PostMapping(path = "/users")
-    public User createUser(@RequestBody User userObject) {
-        LOGGER.info("calling createUser method from controller");
-        return questionService.createUser(userObject);
-    }
-
-
-    //9 -> Put/Update an user http://localhost:9092/api/users/1
-
-    @PutMapping(path = "/users/{userId}")
-    public User updateUser(@PathVariable(
-            value = "userId") Long userId, @RequestBody User userObject) {
-        LOGGER.info("calling updateUser method from controller");
-        return questionService.updateUser(userId, userObject);
-    }
-
-
-    //10 -> Delete a user http://localhost:9092/api/questions/1
-    @DeleteMapping(path = "/users/{userId}")
-    public Optional<User> deleteUser(@PathVariable(value = "userId") Long userId) {
-        LOGGER.info("calling deleteUser method from controller");
-        return questionService.deleteUser(userId);
-    }
 }
+//
+////===========================================Answer================================================================
+//
+//
+//    //6 -> Get all users http://localhost:9092/api/users
+//    @GetMapping("/users/")
+//    public List<User> getAnswers() {
+//        LOGGER.info(" calling getAnswers method from controller");
+//        return questionService.getUsers();
+//    }
+//
+//    //7 -> Get a single user http://localhost:9092/api/users/{userId}
+//    @GetMapping("/users/{userId}")
+//    public Optional getUser(@PathVariable Long userId) {
+//        LOGGER.info(" calling getUser method from controller");
+//        return questionService.getUser(userId);
+//    }
+//
+//
+//    //8 -> Post/Create users and add an user to the user http://localhost:9092/api/users
+//    @PostMapping(path = "/users")
+//    public User createUser(@RequestBody User userObject) {
+//        LOGGER.info("calling createUser method from controller");
+//        return questionService.createUser(userObject);
+//    }
+//
+//
+//    //9 -> Put/Update an user http://localhost:9092/api/users/1
+//
+//    @PutMapping(path = "/users/{userId}")
+//    public User updateUser(@PathVariable(
+//            value = "userId") Long userId, @RequestBody User userObject) {
+//        LOGGER.info("calling updateUser method from controller");
+//        return questionService.updateUser(userId, userObject);
+//    }
+//
+//
+//    //10 -> Delete a user http://localhost:9092/api/questions/1
+//    @DeleteMapping(path = "/users/{userId}")
+//    public Optional<User> deleteUser(@PathVariable(value = "userId") Long userId) {
+//        LOGGER.info("calling deleteUser method from controller");
+//        return questionService.deleteUser(userId);
+//    }
+//}
