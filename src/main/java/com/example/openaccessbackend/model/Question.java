@@ -1,22 +1,24 @@
 package com.example.openaccessbackend.model;
 
 
-//import org.hibernate.annotations.LazyCollection;
-//import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-//import java.util.List;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
-@Table(name = "Questions")
+@Table(name = "question")
 public class Question {
     @Id
-    @Column
+    @Column(name = "question_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "quesiton_text")
     private String text;
 
     @Column
@@ -31,6 +33,10 @@ public class Question {
     @Column
     private String correct;
 
+    @JsonIgnoreProperties("question")
+    @ManyToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Quiz> quiz;
+    public Question(){}
     public Long getId() {
         return id;
     }
@@ -85,5 +91,22 @@ public class Question {
 
     public void setCorrect(String correct) {
         this.correct = correct;
+    }
+    public Set<Quiz> getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Set<Quiz> quiz) {
+        this.quiz = quiz;
+    }
+
+    public void addQuiz(Quiz quiz) {
+        this.quiz.add(quiz);
+        quiz.getQuestion().add(this);
+    }
+
+    public void removeQuiz(Quiz quiz) {
+        this.quiz.remove(quiz);
+        quiz.getQuestion().remove(this);
     }
 }

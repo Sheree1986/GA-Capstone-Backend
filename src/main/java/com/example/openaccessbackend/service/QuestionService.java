@@ -5,14 +5,14 @@ import com.example.openaccessbackend.controller.QuestionController;
 import com.example.openaccessbackend.exception.InformationExistException;
 import com.example.openaccessbackend.exception.InformationNotFoundException;
 import com.example.openaccessbackend.model.Question;
-//import com.example.openaccessbackend.model.User;
+import com.example.openaccessbackend.model.Quiz;
 import com.example.openaccessbackend.repository.QuestionRepository;
-//import com.example.openaccessbackend.repository.UserRepository;
+import com.example.openaccessbackend.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-//import java.util.NoSuchElementException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -29,13 +29,13 @@ public class QuestionService {
     public void setQuestionRepository(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
-//
-//    private UserRepository userRepository;
-//
-//    @Autowired
-//    public void setUserRepository(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+
+    private QuizRepository quizRepository;
+
+    @Autowired
+    public void setQuizRepository(QuizRepository quizRepository) {
+        this.quizRepository = quizRepository;
+    }
 
 
     // ===============================================QUESTION=======================================================
@@ -85,6 +85,7 @@ public class QuestionService {
             question.get().setC(questionObject.getC());
             question.get().setD(questionObject.getD());
             question.get().setCorrect(questionObject.getCorrect());
+            question.get().setQuiz(questionObject.getQuiz());
             return questionRepository.save(question.get());
         }
     }
@@ -102,73 +103,108 @@ public class QuestionService {
         }
     }
 
+
+// ===============================================Quiz=========================================================
+
+    //6 -> Get all quizzes http://localhost:9092/api/quiz/
+    public List<Quiz> getQuiz() {
+        LOGGER.info("service calling getQuestion==>");
+        return quizRepository.findAll();
+    }
+
+    //7 -> Get a single quiz http://localhost:9092/api/quiz/1
+
+    public Optional getQuiz(Long quizId) {
+        LOGGER.info("service calling getQuiz==>");
+        Optional quiz = quizRepository.findById(quizId);
+        if (quiz.isPresent()) {
+            return quiz;
+        } else {
+            throw new InformationNotFoundException("quiz with id " + quizId + " not found");
+        }
+    }
+
+    //8 -> Post/Create a question and add an quiz http://localhost:9092/api/quiz
+
+    public Quiz createQuiz(Quiz quizObject) {
+        LOGGER.info("service calling createQuiz ==>");
+        Quiz quiz = quizRepository.findByName(quizObject.getName());
+        if (quiz !=null) {
+            throw new InformationExistException("quiz with name " + quiz.getName() + " already exists");
+        } else {
+            return quizRepository.save(quizObject);
+        }
+    }
+
+    public Quiz createQuestionQuiz(Long questionId, Quiz quizObject) {
+        LOGGER.info("service calling updateQuestionQuiz method ==> ");
+        try {
+            // here we're trying to find the book
+            Optional question = questionRepository.findById(questionId);
+            // if the book is found, then attach it to the authorObject
+            quizObject.setQuestion((Question) question.get());
+            // we save the author with the book information
+            return quizRepository.save(quizObject);
+        } catch (NoSuchElementException e) {
+            throw new InformationNotFoundException("Question with id " + questionId + "not found");
+        }
+    }
+
+
+
+
+
+    //10 -> Delete an quiz http://localhost:9092/api/quiz/1
+
+
+
+
+    //9 -> Put/Update an quiz http://localhost:9092/api/quiz/1
+    public Quiz updateQuiz(Long quizId, Quiz quizObject) {
+        LOGGER.info("service calling updateQuiz method ==> ");
+        Optional<Quiz> quiz = quizRepository.findById(quizId);
+        if (quiz.isPresent()) {
+            if (quizObject.getName().equals(quiz.get().getName())) {
+                throw new InformationExistException("quiz with name " + quiz.get()
+                        .getName() + " already exist");
+            } else {
+                Quiz updateQuiz = quizRepository.findById(quizId).get();
+                updateQuiz.setName(quizObject.getName());
+                updateQuiz.setDescription(quizObject.getDescription());
+                updateQuiz.setQuestions(quizObject.getQuestions());
+                return quizRepository.save(updateQuiz);
+            }
+        } else {
+            throw new InformationNotFoundException("quiz with id " + quizId + " not found");
+        }
+    }
+        public Quiz updateQuestionQuiz(Long questionId, Quiz quizObject) {
+            LOGGER.info("service calling updateQuestionQuiz method ==> ");
+            try {
+                // here we're trying to find the book
+                Optional question = questionRepository.findById(questionId);
+                // if the book is found, then attach it to the authorObject
+                quizObject.setQuestion((Question) question.get());
+                // we save the author with the book information
+                return quizRepository.save(quizObject);
+            } catch (NoSuchElementException e) {
+                throw new InformationNotFoundException("Question with id " + questionId + "not found");
+            }
+        }
+
+
+
+
+
+    //10 -> Delete an quiz http://localhost:9092/api/quiz/1
+    public Optional<Quiz> deleteQuiz(Long quizId) {
+        LOGGER.info("calling deleteQuiz method ==>");
+        Optional<Quiz> quiz = quizRepository.findById(quizId);
+        if (quiz.isPresent()) {
+            quizRepository.deleteById(quizId);
+            return quiz;
+        } else {
+            throw new InformationNotFoundException("quiz with id: " + quizId + " not found");
+        }
+    }
 }
-//// ===============================================ANSWER=========================================================
-//
-//    //6 -> Get all users http://localhost:9092/api/users/
-//    public List<User> getUsers() {
-//        LOGGER.info("service calling getQuestion==>");
-//        return userRepository.findAll();
-//    }
-//
-//    //7 -> Get a single user http://localhost:9092/api/users/1
-//
-//    public Optional getUser(Long userId) {
-//        LOGGER.info("service calling getUser==>");
-//        Optional user = userRepository.findById(userId);
-//        if (user.isPresent()) {
-//            return user;
-//        } else {
-//            throw new InformationNotFoundException("user with id " + userId + " not found");
-//        }
-//    }
-//
-//    //8 -> Post/Create a question and add an user http://localhost:9092/api/users
-//
-//    public User createUser(User userObject) {
-//        LOGGER.info("service calling createUser ==>");
-//        User user = userRepository.findByName(userObject.getName());
-//        if (user !=null) {
-//            throw new InformationExistException("user with name " + user.getName() + " already exists");
-//        } else {
-//            return userRepository.save(userObject);
-//        }
-//    }
-//
-//
-//
-//
-//    //9 -> Put/Update an user http://localhost:9092/api/users/1
-//    public User updateUser(Long userId, User userObject) {
-//        LOGGER.info("service calling updateUser method ==> ");
-//        Optional<User> user = userRepository.findById(userId);
-//        if (user.isPresent()) {
-//            if (userObject.getName().equals(user.get().getName())) {
-//                throw new InformationExistException("user with name " + user.get()
-//                        .getName() + " already exist");
-//            } else {
-//                User updateUser = userRepository.findById(userId).get();
-//                updateUser.setName(userObject.getName());
-//                updateUser.setEmail(userObject.getEmail());
-//                updateUser.setScore(userObject.getScore());
-//                updateUser.setTimer(userObject.getTimer());
-//                return userRepository.save(updateUser);
-//            }
-//        } else {
-//            throw new InformationNotFoundException("user with id " + userId + " not found");
-//        }
-//
-//    }
-//
-//    //10 -> Delete an user http://localhost:9092/api/user/1
-//    public Optional<User> deleteUser(Long userId) {
-//        LOGGER.info("calling deleteUser method ==>");
-//        Optional<User> user = userRepository.findById(userId);
-//        if (user.isPresent()) {
-//            userRepository.deleteById(userId);
-//            return user;
-//        } else {
-//            throw new InformationNotFoundException("user with id: " + userId + " not found");
-//        }
-//    }
-//}
