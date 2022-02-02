@@ -1,12 +1,11 @@
 package com.example.openaccessbackend.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+
+
 
 import javax.persistence.*;
-import java.util.List;
+
 import java.util.Set;
 
 
@@ -33,9 +32,12 @@ public class Question {
     @Column
     private String correct;
 
+
     @JsonIgnoreProperties("question")
     @ManyToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Quiz> quiz;
+
+
     public Question(){}
     public Long getId() {
         return id;
