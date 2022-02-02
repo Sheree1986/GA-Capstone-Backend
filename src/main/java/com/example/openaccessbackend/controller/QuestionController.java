@@ -38,7 +38,7 @@ public class QuestionController {
     }
     //1 -> GET all question http://localhost:9092/api/questions
     @GetMapping("/question")
-    @ResponseStatus(value = HttpStatus.OK)
+//    @ResponseStatus(value = HttpStatus.OK)
     public List<Question> getQuestion() {
         LOGGER.info(" calling getQuestion method from controller");
 
