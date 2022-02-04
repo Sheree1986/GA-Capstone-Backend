@@ -5,5 +5,11 @@
 
 
 ### Endpoints
-Request Type |	URL           |	Request Body |	Request Header	  |Action	|Access
-POST         | /api/questions | question     | Authorization: none |
+|Request Type|	URL           |	Request Body | Header     |Action    | Access|
+|------------|----------------|--------------|------------|----------|-------|
+|POST        |/api/questions  | question     | Auth: none | Create   |PUBLIC |
+|PUT         |/api/questions/ | question     | Auth: none | Update   |PUBLIC |
+|GET         |/api/questions/ | question     | Auth: none |   View   |PUBLIC |
+|GET         |/api/questions/ | question     | Auth: none |   View   |PUBLIC |
+|DELETE      |/api/questions/ | question     | Auth: none |   Delete |PUBLIC |
+
